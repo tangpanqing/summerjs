@@ -1,0 +1,26 @@
+{
+  "name": "summerjs",
+  "version": "1.0.8",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "gen": "tsc src/index.ts"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@types/multiparty": "^0.0.33",
+    "@types/mysql": "^2.15.21",
+    "@types/node": "^18.0.6",
+    "@types/qs": "^6.9.7",
+    "handlebars": "^4.7.7",
+    "multiparty": "^4.2.3",
+    "mysql": "^2.18.1",
+    "node-schedule": "^2.1.0",
+    "qs": "^6.11.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.7.4",
+    "url": "^0.11.0",
+    "@types/node-schedule": "^2.1.0"
+  }
+}
