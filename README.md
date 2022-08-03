@@ -6,11 +6,11 @@ you can use npm command like this to install summerjs
 ```
 npm i summerjs
 ```
-then create js/ts file, like index.js, type some code
+then create js file, like index.js, type some code
 ```
-import {App,Context} from "summerjs"
+const {App} = require("summerjs")
 
-App.any("/", async (ctx: Context) => "hello world");
+App.any("/", async (ctx) => "hello world");
 
 App.run();
 ```
