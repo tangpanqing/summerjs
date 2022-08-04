@@ -9,7 +9,7 @@ export default class Route {
 
     routes = [] as RouteItem[];
 
-    static instance: Route;
+    protected static instance: Route;
 
     static getInstance = function (): Route {
         if (Route.instance) {

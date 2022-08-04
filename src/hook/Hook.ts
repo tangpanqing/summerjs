@@ -8,7 +8,7 @@ export default class Hook {
 
     hooks = [] as HookItem[];
 
-    static instance: Hook;
+    protected static instance: Hook;
 
     static getInstance = function (): Hook {
         if (Hook.instance) {

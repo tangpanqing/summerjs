@@ -14,4 +14,8 @@ export default class Response {
         this.res.setHeader('Set-Cookie', value)
     }
 
+    clearCookie(){
+
+    }
+
 }

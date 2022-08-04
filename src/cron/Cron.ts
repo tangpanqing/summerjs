@@ -1,12 +1,13 @@
 import CronItem from "./CronItem";
 import * as schedule from 'node-schedule';
-import DbPoolMap from "../db/DbPoolMap";
+import Context from "../Context";
+import Request from "../request/Request";
 
 export default class Cron {
 
     cron_list = [] as CronItem[];
 
-    static instance: Cron;
+    protected static instance: Cron;
 
     static getInstance = function (): Cron {
         if (Cron.instance) {
@@ -17,17 +18,37 @@ export default class Cron {
         }
     }
 
-    push(period: string, call: Function) {
-        let cronItem = new CronItem(period, call);
+    push(period: string, param: any, call: Function) {
+        let cronItem = new CronItem(period, param, call);
         this.cron_list.push(cronItem);
     }
 
-    run(db_pool_map:DbPoolMap) {
+    run(exception_handle: Function) {
         let cron_list = Cron.getInstance().cron_list;
         for (let i = 0; i < cron_list.length; i++) {
             let period = cron_list[i].period;
+            let param = cron_list[i].param;
             let call = cron_list[i].call;
-            schedule.scheduleJob(period, async () => await call(db_pool_map));
+            schedule.scheduleJob(period, async () => {
+                //将参数加入请求
+                let req = new Request();
+                req.param = param;
+
+                //构建上下文
+                let ctx = new Context();
+                ctx.request = req;
+
+                try {
+                    await call(ctx);
+                    ctx.releaseConn();
+                } catch (e) {
+                    if (exception_handle) {
+                        exception_handle(e, ctx);
+                    } else {
+                        throw new Error(e);
+                    }
+                }
+            });
         }
     }
 

@@ -19,7 +19,6 @@ export default class Request {
     }
 
     static async fromCommon(req: IncomingMessage) {
-
         let o = new Request();
         o.method = req.method ?? "";
         o.param = {};
@@ -113,6 +112,18 @@ export default class Request {
             return this.param[key] + "";
         }
         return def;
+    }
+
+    getNumber(key: string, def: number = 0): number {
+        if (this.param.hasOwnProperty(key)) {
+            return Number(this.param[key]);
+        }
+        return def;
+    }
+
+    getFile(key: string) {
+        if (this.files[key]) return this.files[key];
+        return null;
     }
 
     getCookie() {

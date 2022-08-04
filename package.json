@@ -2,9 +2,10 @@
   "name": "summerjs",
   "version": "1.0.10",
   "description": "",
-  "main": "src/index.js",
+  "main": "test/index.ts",
   "scripts": {
-    "gen": "tsc src/index.ts"
+    "gen": "tsc src/index.ts",
+    "test": "ts-node test/index.ts"
   },
   "author": "",
   "license": "MIT",
