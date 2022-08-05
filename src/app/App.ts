@@ -47,6 +47,24 @@ export default class App {
     }
 
     /**
+     * handle request if the request method is PUT
+     * @param path request path {string}
+     * @param call handle function {Function}
+     */
+    static put(path: string, call: Function) {
+        Route.getInstance().push(Route.put, path, call);
+    }
+
+    /**
+     * handle request if the request method is DELETE
+     * @param path request path {string}
+     * @param call handle function {Function}
+     */
+    static delete(path: string, call: Function) {
+        Route.getInstance().push(Route.delete, path, call);
+    }
+
+    /**
      * handle request if the request method is POST|GET
      * @param path request path {string}
      * @param call handle function {Function}

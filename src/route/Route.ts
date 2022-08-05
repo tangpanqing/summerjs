@@ -5,9 +5,11 @@ import RouteItem from "./RouteItem";
 export default class Route {
     static post: string = "POST";
     static get: string = "GET";
+    static put: string = "PUT";
+    static delete: string = "DELETE";
     static any: string = "ANY";
 
-    routes = [] as RouteItem[];
+    protected routes = [] as RouteItem[];
 
     protected static instance: Route;
 
