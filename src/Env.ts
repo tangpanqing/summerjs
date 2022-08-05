@@ -1,9 +1,9 @@
 import * as fs from "fs";
 
 export default class Env {
-    //[index:string]: string
-
-    protected param_map: any = {};
+    protected param_map: any = {
+        port: "5000"
+    };
 
     protected static instance: Env;
 
@@ -20,12 +20,8 @@ export default class Env {
         let env_file = ".env";
         if (fs.existsSync(env_file)) {
             let env = Env.getInstance();
-
             let content = fs.readFileSync(env_file).toString();
-            let sep = "\n";
-            if (process.platform == "win32") sep = "\r\n";
-            if (process.platform == "darwin") sep = "\r";
-
+            let sep = this.getSep();
             let content_arr = content.split(sep);
             for (let key in content_arr) {
                 let s = content_arr[key];
@@ -36,6 +32,13 @@ export default class Env {
                 }
             }
         }
+    }
+
+    protected getSep(){
+        let sep = "\n";
+        if (process.platform == "win32") sep = "\r\n";
+        if (process.platform == "darwin") sep = "\r";
+        return sep;
     }
 
     getParamMap(){

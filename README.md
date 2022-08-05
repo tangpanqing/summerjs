@@ -6,7 +6,7 @@ you can use npm command like this to install summerjs
 ```
 npm i summerjs
 ```
-then create js file, like index.js, type some code
+then create js file, like index_js.js, type some code
 ```
 const {App} = require("summerjs")
 
@@ -14,9 +14,9 @@ App.any("/", async (ctx) => "hello world");
 
 App.run();
 ```
-then run index.js in your terminal
+then run index_js.js in your terminal
 ```
-node index.js
+node index_js.js
 ```
 then you will get some info like this
 ```

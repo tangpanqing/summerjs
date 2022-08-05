@@ -4,18 +4,16 @@
     "watch": true,
     "strictPropertyInitialization": true,
     "strictNullChecks": true,
-
     "strict": false,
     "alwaysStrict": false,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
-
     "outDir": "./dist",
     "rootDir": "./src",
     "target": "es5",
-    "sourceMap": true,
+    "sourceMap": false,
     "module": "commonjs",
     "moduleResolution": "Node",
     "experimentalDecorators": true,
@@ -25,9 +23,10 @@
     "baseUrl": ".",
     "lib": ["es2015"],
     "declaration": true,
+    "declarationMap": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": [""],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

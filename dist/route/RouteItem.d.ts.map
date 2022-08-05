@@ -1,0 +1,1 @@
+{"version":3,"file":"RouteItem.d.ts","sourceRoot":"","sources":["../../src/route/RouteItem.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,OAAO,OAAO,SAAS;IAC1B,MAAM,EAAE,MAAM,CAAC;IACf,IAAI,EAAE,MAAM,CAAC;IACb,IAAI,EAAE,QAAQ,CAAC;gBAEH,MAAM,EAAC,MAAM,EAAE,IAAI,EAAC,MAAM,EAAE,IAAI,EAAC,QAAQ;CAKxD"}

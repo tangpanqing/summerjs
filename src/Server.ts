@@ -6,6 +6,7 @@ import Route from "./route/Route";
 import Context from "./Context";
 import Hook from "./hook/Hook";
 import {IncomingMessage, ServerResponse} from "http";
+import Env from "./Env";
 
 export default class Server {
 
@@ -39,17 +40,17 @@ export default class Server {
             }
         });
 
-        let port: number = Number(process.env.PORT) || 5000;
+        let port: number = Number(process.env.PORT) || Number(Env.getInstance().getParam("port"));
         server.listen(port, '0.0.0.0', () => {
             console.log("server is running at " + port.toString())
         });
     }
 
-    getContentType(){
+    getContentType() {
         return this.content_type_map;
     }
 
-    addContentType(suffix:string, content_type:string){
+    addContentType(suffix: string, content_type: string) {
         this.content_type_map[suffix] = content_type;
     }
 
