@@ -1,4 +1,4 @@
-import Context from "../Context";
+import Context from "../context/Context";
 import HookItem from "./HookItem";
 
 export default class Hook {

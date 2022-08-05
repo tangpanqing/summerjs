@@ -1,11 +1,11 @@
 /// <reference types="node" />
-import Context from "./Context";
+import Context from "../context/Context";
 import { IncomingMessage, ServerResponse } from "http";
 export default class Server {
     protected content_type_map: any;
     protected static instance: Server;
     static getInstance: () => Server;
-    http(exception_handle: Function): void;
+    http(exception_handle: Function, port: number): void;
     getContentType(): any;
     addContentType(suffix: string, content_type: string): void;
     handle_static(req: IncomingMessage, res: ServerResponse): void;

@@ -1,8 +1,8 @@
-import Request from "./request/Request";
-import DbConnMap from "./db/DbConnMap";
-import Response from "./response/Response";
-import Db from "./db/Db";
-import Verify from "./verify/Verify";
+import Request from "../request/Request";
+import DbConnMap from "../db/DbConnMap";
+import Response from "../response/Response";
+import Db from "../db/Db";
+import Verify from "../verify/Verify";
 
 export default class Context {
     db_conn_map!: DbConnMap;

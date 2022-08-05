@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var DbPoolMap_1 = require("./DbPoolMap");
 var mysql = require("mysql");
-var Env_1 = require("../Env");
+var Env_1 = require("../env/Env");
 var DbPool = /** @class */ (function () {
     function DbPool() {
     }

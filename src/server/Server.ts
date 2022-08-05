@@ -1,12 +1,12 @@
 import * as http from "http";
 import * as fs from "fs";
-import Request from "./request/Request";
-import Response from "./response/Response";
-import Route from "./route/Route";
-import Context from "./Context";
-import Hook from "./hook/Hook";
+import Request from "../request/Request";
+import Response from "../response/Response";
+import Route from "../route/Route";
+import Context from "../context/Context";
+import Hook from "../hook/Hook";
 import {IncomingMessage, ServerResponse} from "http";
-import Env from "./Env";
+import Env from "../env/Env";
 
 export default class Server {
 
@@ -31,7 +31,7 @@ export default class Server {
         }
     }
 
-    http(exception_handle: Function) {
+    http(exception_handle: Function, port: number) {
         const server = http.createServer(async (req, res) => {
             if (req.url?.indexOf(".") != -1) {
                 this.handle_static(req, res);
@@ -40,7 +40,6 @@ export default class Server {
             }
         });
 
-        let port: number = Number(process.env.PORT) || Number(Env.getInstance().getParam("port"));
         server.listen(port, '0.0.0.0', () => {
             console.log("server is running at " + port.toString())
         });

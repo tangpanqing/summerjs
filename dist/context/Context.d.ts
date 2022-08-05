@@ -1,7 +1,7 @@
-import Request from "./request/Request";
-import DbConnMap from "./db/DbConnMap";
-import Response from "./response/Response";
-import Db from "./db/Db";
+import Request from "../request/Request";
+import DbConnMap from "../db/DbConnMap";
+import Response from "../response/Response";
+import Db from "../db/Db";
 export default class Context {
     db_conn_map: DbConnMap;
     request: Request;

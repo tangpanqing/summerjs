@@ -3,9 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
 var Env = /** @class */ (function () {
     function Env() {
-        this.param_map = {
-            port: "5000"
-        };
+        this.param_map = {};
     }
     Env.prototype.load = function () {
         var env_file = ".env";

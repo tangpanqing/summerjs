@@ -36,8 +36,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Db_1 = require("./db/Db");
-var Verify_1 = require("./verify/Verify");
+var Db_1 = require("../db/Db");
+var Verify_1 = require("../verify/Verify");
 var Context = /** @class */ (function () {
     function Context() {
         this.err_list = [];

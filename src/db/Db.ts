@@ -4,7 +4,7 @@ import DbConnMap from "./DbConnMap";
 import DbConn from "./DbConn";
 import DbWhereItem from "./DbWhereItem";
 import DbPool from "./DbPool";
-import Context from "../Context";
+import Context from "../context/Context";
 import * as Assert from "assert";
 
 export default class Db {

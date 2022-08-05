@@ -56,6 +56,6 @@ export default class App {
     /**
      * run the application
      */
-    static run(): void;
+    static run(port?: number): void;
 }
 //# sourceMappingURL=App.d.ts.map

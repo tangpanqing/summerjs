@@ -38,12 +38,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var http = require("http");
 var fs = require("fs");
-var Request_1 = require("./request/Request");
-var Response_1 = require("./response/Response");
-var Route_1 = require("./route/Route");
-var Context_1 = require("./Context");
-var Hook_1 = require("./hook/Hook");
-var Env_1 = require("./Env");
+var Request_1 = require("../request/Request");
+var Response_1 = require("../response/Response");
+var Route_1 = require("../route/Route");
+var Context_1 = require("../context/Context");
+var Hook_1 = require("../hook/Hook");
 var Server = /** @class */ (function () {
     function Server() {
         this.content_type_map = {
@@ -56,7 +55,7 @@ var Server = /** @class */ (function () {
             "html": "text/html;charset=utf8"
         };
     }
-    Server.prototype.http = function (exception_handle) {
+    Server.prototype.http = function (exception_handle, port) {
         var _this = this;
         var server = http.createServer(function (req, res) { return __awaiter(_this, void 0, void 0, function () {
             var _a;
@@ -74,7 +73,6 @@ var Server = /** @class */ (function () {
                 }
             });
         }); });
-        var port = Number(process.env.PORT) || Number(Env_1.default.getInstance().getParam("port"));
         server.listen(port, '0.0.0.0', function () {
             console.log("server is running at " + port.toString());
         });

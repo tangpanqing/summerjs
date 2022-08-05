@@ -1,9 +1,9 @@
-import Hook from "./hook/Hook";
-import Route from "./route/Route";
-import Cron from "./cron/Cron";
-import DbPool from "./db/DbPool";
-import Server from "./Server";
-import Env from "./Env";
+import Hook from "../hook/Hook";
+import Route from "../route/Route";
+import Cron from "../cron/Cron";
+import DbPool from "../db/DbPool";
+import Server from "../server/Server";
+import Env from "../env/Env";
 
 export default class App {
 
@@ -92,14 +92,14 @@ export default class App {
     /**
      * run the application
      */
-    static run() {
+    static run(port: number = 5000) {
         Env.getInstance().load();
 
         DbPool.getInstance().run();
 
         Cron.getInstance().run(App.exception_handle);
 
-        Server.getInstance().http(App.exception_handle);
+        Server.getInstance().http(App.exception_handle, port);
     }
 
 }

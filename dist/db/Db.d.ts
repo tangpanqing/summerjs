@@ -1,7 +1,7 @@
 import { MysqlError, PoolConnection } from "mysql";
 import DbPoolMap from "./DbPoolMap";
 import DbConnMap from "./DbConnMap";
-import Context from "../Context";
+import Context from "../context/Context";
 export default class Db {
     ctx: Context;
     db_type: string;

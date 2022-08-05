@@ -1,6 +1,6 @@
 import CronItem from "./CronItem";
 import * as schedule from 'node-schedule';
-import Context from "../Context";
+import Context from "../context/Context";
 import Request from "../request/Request";
 
 export default class Cron {

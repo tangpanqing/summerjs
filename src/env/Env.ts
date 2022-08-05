@@ -1,9 +1,7 @@
 import * as fs from "fs";
 
 export default class Env {
-    protected param_map: any = {
-        port: "5000"
-    };
+    protected param_map: any = {};
 
     protected static instance: Env;
 

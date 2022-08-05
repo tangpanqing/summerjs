@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.View = exports.Verify = exports.Route = exports.Response = exports.Request = exports.Hook = exports.TimeHelper = exports.ShowHelper = exports.RandHelper = exports.FileHelper = exports.Db = exports.Cron = exports.Context = exports.App = void 0;
-var App_1 = require("./App");
+var App_1 = require("./app/App");
 exports.App = App_1.default;
-var Context_1 = require("./Context");
+var Context_1 = require("./context/Context");
 exports.Context = Context_1.default;
 var Cron_1 = require("./cron/Cron");
 exports.Cron = Cron_1.default;

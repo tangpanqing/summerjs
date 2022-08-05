@@ -1,6 +1,6 @@
 import DbPoolMap from "./DbPoolMap";
 import * as mysql from "mysql";
-import Env from "../Env";
+import Env from "../env/Env";
 
 export default class DbPool {
 

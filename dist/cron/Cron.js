@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var CronItem_1 = require("./CronItem");
 var schedule = require("node-schedule");
-var Context_1 = require("../Context");
+var Context_1 = require("../context/Context");
 var Request_1 = require("../request/Request");
 var Cron = /** @class */ (function () {
     function Cron() {

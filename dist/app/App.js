@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Hook_1 = require("./hook/Hook");
-var Route_1 = require("./route/Route");
-var Cron_1 = require("./cron/Cron");
-var DbPool_1 = require("./db/DbPool");
-var Server_1 = require("./Server");
-var Env_1 = require("./Env");
+var Hook_1 = require("../hook/Hook");
+var Route_1 = require("../route/Route");
+var Cron_1 = require("../cron/Cron");
+var DbPool_1 = require("../db/DbPool");
+var Server_1 = require("../server/Server");
+var Env_1 = require("../env/Env");
 var App = /** @class */ (function () {
     function App() {
     }
@@ -80,11 +80,12 @@ var App = /** @class */ (function () {
     /**
      * run the application
      */
-    App.run = function () {
+    App.run = function (port) {
+        if (port === void 0) { port = 5000; }
         Env_1.default.getInstance().load();
         DbPool_1.default.getInstance().run();
         Cron_1.default.getInstance().run(App.exception_handle);
-        Server_1.default.getInstance().http(App.exception_handle);
+        Server_1.default.getInstance().http(App.exception_handle, port);
     };
     return App;
 }());

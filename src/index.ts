@@ -1,5 +1,5 @@
-import App from "./App"
-import Context from "./Context"
+import App from "./app/App"
+import Context from "./context/Context"
 
 import Cron from "./cron/Cron"
 import Db from "./db/Db"
