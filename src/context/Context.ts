@@ -58,7 +58,7 @@ export default class Context {
     }
 
     //数据库相关
-    table(table_name: string, db_type: string = "primary"): Db {
+    table(table_name: any, db_type: string = "primary"): Db {
         return new Db().setContext(this).setDbType(db_type).table(table_name);
     }
 

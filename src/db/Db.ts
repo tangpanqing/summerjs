@@ -6,6 +6,8 @@ import DbWhereItem from "./DbWhereItem";
 import DbPool from "./DbPool";
 import Context from "../context/Context";
 import * as Assert from "assert";
+import StringHelper from "../helper/StringHelper";
+import assert from "assert";
 
 export default class Db {
     ctx!: Context;
@@ -74,8 +76,15 @@ export default class Db {
         }
     }
 
-    table(table_name: string) {
-        this.condition.table_name = table_name;
+    table(table_name: any) {
+        if (typeof table_name == "string") {
+            this.condition.table_name = table_name;
+        } else if (typeof table_name == "object") {
+            this.condition.table_name = StringHelper.toLine(table_name.constructor.name)
+        } else {
+
+        }
+
         return this;
     }
 
