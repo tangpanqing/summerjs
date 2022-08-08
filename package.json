@@ -1,6 +1,6 @@
 {
   "name": "summerjs",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "author": "tangpanqing",
   "description": "a backend framework for js/ts developer",
   "main": "dist/index.js",
