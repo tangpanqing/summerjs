@@ -26,6 +26,18 @@ export default class App {
      */
     static get(path: string, call: Function): void;
     /**
+     * handle request if the request method is PUT
+     * @param path request path {string}
+     * @param call handle function {Function}
+     */
+    static put(path: string, call: Function): void;
+    /**
+     * handle request if the request method is DELETE
+     * @param path request path {string}
+     * @param call handle function {Function}
+     */
+    static delete(path: string, call: Function): void;
+    /**
      * handle request if the request method is POST|GET
      * @param path request path {string}
      * @param call handle function {Function}

@@ -13,7 +13,7 @@ export default class Db {
     rollback(): Promise<boolean>;
     getConn(): Promise<PoolConnection>;
     transCall(error: MysqlError, resolved: Function, rejected: Function): void;
-    table(table_name: string): this;
+    table(table_name: any): this;
     static getDbConnMap(db_pool_map: DbPoolMap): Promise<DbConnMap>;
     static releaseConn(db: DbConnMap): void;
     field(f: string): this;

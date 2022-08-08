@@ -14,7 +14,7 @@ export default class Context {
     getFile(key: string): any;
     setCookie(value: string): void;
     clearCookie(): void;
-    table(table_name: string, db_type?: string): Db;
+    table(table_name: any, db_type?: string): Db;
     query(sql: string, bind: any[], db_type?: string): Promise<any>;
     beginTransaction(db_type?: string): Promise<boolean>;
     commit(db_type?: string): Promise<boolean>;

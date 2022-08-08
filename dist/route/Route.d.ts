@@ -3,8 +3,10 @@ import RouteItem from "./RouteItem";
 export default class Route {
     static post: string;
     static get: string;
+    static put: string;
+    static delete: string;
     static any: string;
-    routes: RouteItem[];
+    protected routes: RouteItem[];
     protected static instance: Route;
     static getInstance: () => Route;
     push(method: string, path: string, call: Function): void;

@@ -40,6 +40,22 @@ var App = /** @class */ (function () {
         Route_1.default.getInstance().push(Route_1.default.get, path, call);
     };
     /**
+     * handle request if the request method is PUT
+     * @param path request path {string}
+     * @param call handle function {Function}
+     */
+    App.put = function (path, call) {
+        Route_1.default.getInstance().push(Route_1.default.put, path, call);
+    };
+    /**
+     * handle request if the request method is DELETE
+     * @param path request path {string}
+     * @param call handle function {Function}
+     */
+    App.delete = function (path, call) {
+        Route_1.default.getInstance().push(Route_1.default.delete, path, call);
+    };
+    /**
      * handle request if the request method is POST|GET
      * @param path request path {string}
      * @param call handle function {Function}

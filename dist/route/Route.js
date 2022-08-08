@@ -47,6 +47,8 @@ var Route = /** @class */ (function () {
     };
     Route.post = "POST";
     Route.get = "GET";
+    Route.put = "PUT";
+    Route.delete = "DELETE";
     Route.any = "ANY";
     Route.getInstance = function () {
         if (Route.instance) {

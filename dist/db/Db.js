@@ -40,6 +40,7 @@ var DbConn_1 = require("./DbConn");
 var DbWhereItem_1 = require("./DbWhereItem");
 var DbPool_1 = require("./DbPool");
 var Assert = require("assert");
+var StringHelper_1 = require("../helper/StringHelper");
 var Db = /** @class */ (function () {
     function Db() {
         this.condition = {
@@ -144,7 +145,14 @@ var Db = /** @class */ (function () {
         }
     };
     Db.prototype.table = function (table_name) {
-        this.condition.table_name = table_name;
+        if (typeof table_name == "string") {
+            this.condition.table_name = table_name;
+        }
+        else if (typeof table_name == "object") {
+            this.condition.table_name = StringHelper_1.default.toLine(table_name.constructor.name);
+        }
+        else {
+        }
         return this;
     };
     Db.getDbConnMap = function (db_pool_map) {
