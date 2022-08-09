@@ -24,7 +24,7 @@ var View = /** @class */ (function () {
         return template(param);
     };
     View.getFileContent = function (filePath) {
-        var file = path.join(process.cwd(), 'view' + filePath + '.html');
+        var file = path.join(process.cwd(), 'view/' + filePath + '.html');
         var content = (0, fs_1.readFileSync)(file, 'utf8');
         return content;
     };

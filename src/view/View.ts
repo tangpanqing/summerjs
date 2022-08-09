@@ -24,7 +24,7 @@ export default class View {
     }
 
     protected static getFileContent(filePath: string) {
-        let file = path.join(process.cwd(), 'view' + filePath + '.html');
+        let file = path.join(process.cwd(), 'view/' + filePath + '.html');
 
         let content = readFileSync(file, 'utf8');
 

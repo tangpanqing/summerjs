@@ -53,10 +53,8 @@ export default class Route {
     }
 
     getHandle(request: Request): Function {
-        let rs = this.routes;
-
         let handle: Function = (ctx: Context) => {
-            return "NOT FOUND\n" + ctx.request.path + "\n" + JSON.stringify(rs);
+            return "not found";
         };
 
         for (let i = 0; i < this.routes.length; i++) {

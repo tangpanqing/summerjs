@@ -35,9 +35,8 @@ var Route = /** @class */ (function () {
         }
     };
     Route.prototype.getHandle = function (request) {
-        var rs = this.routes;
         var handle = function (ctx) {
-            return "NOT FOUND\n" + ctx.request.path + "\n" + JSON.stringify(rs);
+            return "not found";
         };
         for (var i = 0; i < this.routes.length; i++) {
             var route = this.routes[i];
