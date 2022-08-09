@@ -45,7 +45,7 @@ var Db = /** @class */ (function () {
     function Db() {
         this.condition = {
             table_name: "",
-            field_name: "",
+            field_name: "*",
             order_by: "",
             where_list: []
         };

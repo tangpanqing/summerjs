@@ -7,14 +7,13 @@ import DbPool from "./DbPool";
 import Context from "../context/Context";
 import * as Assert from "assert";
 import StringHelper from "../helper/StringHelper";
-import assert from "assert";
 
 export default class Db {
     ctx!: Context;
     db_type!: string;
     condition: any = {
         table_name: "",
-        field_name: "",
+        field_name: "*",
         order_by: "",
         where_list: []
     };

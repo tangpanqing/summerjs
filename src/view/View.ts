@@ -1,10 +1,12 @@
 import * as Handlebars from "handlebars";
-import * as fs from "fs";
+import {readFileSync} from "fs";
+import * as path from "path";
 
 export default class View {
 
-    static renderFile(path: string, param: any = null) {
-        let content = fs.readFileSync("./view/" + path + ".html");
+    static renderFile(filePath: string, param: any = null) {
+        let content = View.getFileContent(filePath);
+
         let str = content.toString();
         let include_list = str.match(/\<include\>[A-Za-z0-9\/_]+\<\/include\>/g);
         if (include_list) {
@@ -12,13 +14,21 @@ export default class View {
                 let v = include_list[i];
                 let o = v.replace("<include>", "");
                 o = o.replace("</include>", "");
-                let o_content = fs.readFileSync("./view/" + o + ".html");
+                let o_content = View.getFileContent(o);
                 str = str.replace(v, o_content.toString());
             }
         }
 
         const template = Handlebars.compile(str);
         return template(param);
+    }
+
+    protected static getFileContent(filePath: string) {
+        let file = path.join(process.cwd(), 'view' + filePath + '.html');
+
+        let content = readFileSync(file, 'utf8');
+
+        return content;
     }
 
 }

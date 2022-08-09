@@ -38,14 +38,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Db_1 = require("../db/Db");
 var Verify_1 = require("../verify/Verify");
+var fs = require("fs");
+var Route_1 = require("../route/Route");
+var Hook_1 = require("../hook/Hook");
 var Context = /** @class */ (function () {
     function Context() {
         this.err_list = [];
     }
-    Context.from = function (request, response) {
+    Context.from = function (request) {
         var ctx = new Context();
         ctx.request = request;
-        ctx.response = response;
+        //ctx.response = response;
         return ctx;
     };
     //请求相关
@@ -142,6 +145,89 @@ var Context = /** @class */ (function () {
     Context.prototype.releaseConn = function () {
         if (this.db_conn_map)
             Db_1.default.releaseConn(this.db_conn_map);
+    };
+    Context.prototype.runCommon = function (exception_handle, content_type_map) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        if (!(((_a = this.request.path) === null || _a === void 0 ? void 0 : _a.indexOf(".")) != -1)) return [3 /*break*/, 1];
+                        return [2 /*return*/, this.handle_static(content_type_map)];
+                    case 1: return [4 /*yield*/, this.handle_request(exception_handle)];
+                    case 2: return [2 /*return*/, _b.sent()];
+                }
+            });
+        });
+    };
+    Context.prototype.handle_static = function (content_type_map) {
+        var _a;
+        var arr = ((_a = this.request.path) === null || _a === void 0 ? void 0 : _a.split(".")) || [];
+        var suffix = arr[arr.length - 1];
+        var content_type = "";
+        if (content_type_map[suffix])
+            content_type = content_type_map[suffix];
+        var path = './public' + this.request.path;
+        if (!fs.existsSync(path)) {
+            this.writeHead(400, { 'Content-type': "text/html;charset=utf8" });
+            return "NOT FOUND";
+        }
+        else {
+            this.writeHead(200, { 'Content-type': content_type });
+            return fs.readFileSync(path);
+        }
+    };
+    Context.prototype.handle_request = function (exception_handle) {
+        return __awaiter(this, void 0, void 0, function () {
+            var res_handle, handle, e_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 4, , 5]);
+                        handle = Route_1.default.getInstance().getHandle(this.request);
+                        //执行
+                        return [4 /*yield*/, Hook_1.default.getInstance().before(this)];
+                    case 1:
+                        //执行
+                        _a.sent();
+                        return [4 /*yield*/, handle(this)];
+                    case 2:
+                        res_handle = _a.sent();
+                        return [4 /*yield*/, Hook_1.default.getInstance().after(this, res_handle)];
+                    case 3:
+                        res_handle = _a.sent();
+                        //释放数据库连接,释放
+                        this.releaseConn();
+                        return [3 /*break*/, 5];
+                    case 4:
+                        e_1 = _a.sent();
+                        if (exception_handle) {
+                            res_handle = exception_handle(e_1, this);
+                        }
+                        else {
+                            throw new Error(e_1);
+                        }
+                        return [3 /*break*/, 5];
+                    case 5:
+                        if (typeof (res_handle) == "object") {
+                            this.writeHead(200, {
+                                "Content-Type": "application/json;charset=utf8"
+                            });
+                            res_handle = JSON.stringify(res_handle);
+                        }
+                        else {
+                            this.writeHead(200, {
+                                "Content-Type": "text/html;charset=utf8"
+                            });
+                        }
+                        return [2 /*return*/, res_handle];
+                }
+            });
+        });
+    };
+    Context.prototype.writeHead = function (code, header) {
+        this.response_code = code;
+        this.response_header = header;
     };
     return Context;
 }());

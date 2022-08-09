@@ -35,7 +35,10 @@ var Route = /** @class */ (function () {
         }
     };
     Route.prototype.getHandle = function (request) {
-        var handle = function (ctx) { return "NOT FOUND"; };
+        var rs = this.routes;
+        var handle = function (ctx) {
+            return "NOT FOUND\n" + ctx.request.path + "\n" + JSON.stringify(rs);
+        };
         for (var i = 0; i < this.routes.length; i++) {
             var route = this.routes[i];
             if (this.isRouteMatch(route.method, request) && this.isPathMatch(route.path, request)) {

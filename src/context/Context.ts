@@ -3,17 +3,25 @@ import DbConnMap from "../db/DbConnMap";
 import Response from "../response/Response";
 import Db from "../db/Db";
 import Verify from "../verify/Verify";
+import * as fs from "fs";
+import Route from "../route/Route";
+import Hook from "../hook/Hook";
 
 export default class Context {
+
+
     db_conn_map!: DbConnMap;
     request!: Request;
     response!: Response;
     err_list: string[] = [];
 
-    static from(request: Request, response: Response) {
+    response_code!:number;
+    response_header!:any;
+
+    static from(request: Request) {
         let ctx = new Context();
         ctx.request = request;
-        ctx.response = response;
+        //ctx.response = response;
         return ctx;
     }
 
@@ -80,5 +88,70 @@ export default class Context {
 
     releaseConn() {
         if (this.db_conn_map) Db.releaseConn(this.db_conn_map);
+    }
+
+    async runCommon(exception_handle:Function, content_type_map:any) {
+        if (this.request.path?.indexOf(".") != -1) {
+            return this.handle_static(content_type_map);
+        } else {
+            return await this.handle_request(exception_handle);
+        }
+    }
+
+    handle_static(content_type_map:any) {
+        let arr = this.request.path?.split(".") || [];
+        let suffix = arr[arr.length - 1];
+        let content_type = "";
+        if (content_type_map[suffix]) content_type = content_type_map[suffix];
+
+        let path = './public' + this.request.path;
+        if (!fs.existsSync(path)) {
+            this.writeHead(400, {'Content-type': "text/html;charset=utf8"})
+            return "NOT FOUND";
+        } else {
+            this.writeHead(200, {'Content-type': content_type})
+            return fs.readFileSync(path);
+        }
+    }
+
+    async handle_request(exception_handle: Function) {
+        let res_handle;
+        try {
+            //获取要执行的方法
+            let handle = Route.getInstance().getHandle(this.request);
+
+            //执行
+            await Hook.getInstance().before(this);
+            res_handle = await handle(this);
+            res_handle = await Hook.getInstance().after(this, res_handle);
+
+            //释放数据库连接,释放
+            this.releaseConn();
+        } catch (e) {
+            if (exception_handle) {
+                res_handle = exception_handle(e, this);
+            } else {
+                throw new Error(e);
+            }
+        }
+
+        if (typeof (res_handle) == "object") {
+            this.writeHead(200, {
+                "Content-Type": "application/json;charset=utf8"
+            });
+            res_handle = JSON.stringify(res_handle);
+        } else {
+            this.writeHead(200, {
+                "Content-Type": "text/html;charset=utf8"
+            });
+        }
+
+        return res_handle;
+    }
+
+
+    writeHead(code: number, header: any) {
+        this.response_code = code;
+        this.response_header = header;
     }
 }

@@ -69,8 +69,8 @@ export default class Request {
                         }
                     }
 
-                    if(call_res.files){
-                        for(let k in call_res.files){
+                    if (call_res.files) {
+                        for (let k in call_res.files) {
                             o.files[k] = call_res.files[k][0];
                         }
                     }
@@ -129,4 +129,5 @@ export default class Request {
     getCookie() {
         return this.cookie;
     }
+
 }

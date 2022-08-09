@@ -2,10 +2,22 @@ import Hook from "../hook/Hook";
 import Route from "../route/Route";
 import Cron from "../cron/Cron";
 import DbPool from "../db/DbPool";
-import Server from "../server/Server";
 import Env from "../env/Env";
+import Context from "../context/Context";
+import Request from "../request/Request";
+import * as http from "http";
 
 export default class App {
+
+    protected static content_type_map: any = {
+        "ico": "image/x-icon",
+        "jpg": "image/jpg",
+        "png": "image/png",
+        "css": "text/css;charset=utf8",
+        "js": "application/javascript;charset=utf8",
+        "htm": "text/html;charset=utf8",
+        "html": "text/html;charset=utf8"
+    }
 
     /**
      * global exception handle function
@@ -95,7 +107,7 @@ export default class App {
      * get all content type that application can support
      */
     static getContentType() {
-        return Server.getInstance().getContentType();
+        return App.content_type_map;
     }
 
     /**
@@ -104,20 +116,42 @@ export default class App {
      * @param content_type content type {string}
      */
     static addContentType(suffix: string, content_type: string) {
-        Server.getInstance().addContentType(suffix, content_type);
+        App.content_type_map[suffix] = content_type;
+    }
+
+    /**
+     * before run the application
+     */
+    static runBefore() {
+        Env.getInstance().load();
+
+        DbPool.getInstance().run();
+
+        Cron.getInstance().run(App.exception_handle);
+    }
+
+    static async runCommon(ctx: Context) {
+        return await ctx.runCommon(App.exception_handle, App.content_type_map);
     }
 
     /**
      * run the application
      */
     static run(port: number = 5000) {
-        Env.getInstance().load();
+        App.runBefore();
 
-        DbPool.getInstance().run();
+        const server = http.createServer(async (req, res) => {
+            let request = await Request.fromCommon(req);
 
-        Cron.getInstance().run(App.exception_handle);
+            let ctx = Context.from(request);
+            let handle_res = await ctx.runCommon(App.exception_handle, App.content_type_map);
 
-        Server.getInstance().http(App.exception_handle, port);
+            res.writeHead(ctx.response_code, ctx.response_header);
+            res.end(handle_res);
+        });
+
+        server.listen(port, '0.0.0.0', () => {
+            console.log("server is running at " + port.toString())
+        });
     }
-
 }

@@ -1,4 +1,5 @@
 export default class View {
-    static renderFile(path: string, param?: any): string;
+    static renderFile(filePath: string, param?: any): string;
+    protected static getFileContent(filePath: string): string;
 }
 //# sourceMappingURL=View.d.ts.map

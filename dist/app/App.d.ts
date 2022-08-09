@@ -1,4 +1,6 @@
+import Context from "../context/Context";
 export default class App {
+    protected static content_type_map: any;
     /**
      * global exception handle function
      */
@@ -65,6 +67,11 @@ export default class App {
      * @param content_type content type {string}
      */
     static addContentType(suffix: string, content_type: string): void;
+    /**
+     * before run the application
+     */
+    static runBefore(): void;
+    static runCommon(ctx: Context): Promise<any>;
     /**
      * run the application
      */

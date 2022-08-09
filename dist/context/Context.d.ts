@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import Request from "../request/Request";
 import DbConnMap from "../db/DbConnMap";
 import Response from "../response/Response";
@@ -7,7 +8,9 @@ export default class Context {
     request: Request;
     response: Response;
     err_list: string[];
-    static from(request: Request, response: Response): Context;
+    response_code: number;
+    response_header: any;
+    static from(request: Request): Context;
     getString(key: string, def?: string, verify_list?: string[], key_name?: string): string;
     getNumber(key: string, def?: number, verify_list?: string[], key_name?: string): number;
     verify(key: string, val: any, verify_list: string[] | undefined, key_name: string): void;
@@ -20,5 +23,9 @@ export default class Context {
     commit(db_type?: string): Promise<boolean>;
     rollback(db_type?: string): Promise<boolean>;
     releaseConn(): void;
+    runCommon(exception_handle: Function, content_type_map: any): Promise<any>;
+    handle_static(content_type_map: any): Buffer | "NOT FOUND";
+    handle_request(exception_handle: Function): Promise<any>;
+    writeHead(code: number, header: any): void;
 }
 //# sourceMappingURL=Context.d.ts.map

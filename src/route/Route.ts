@@ -53,7 +53,11 @@ export default class Route {
     }
 
     getHandle(request: Request): Function {
-        let handle: Function = (ctx: Context) => "NOT FOUND";
+        let rs = this.routes;
+
+        let handle: Function = (ctx: Context) => {
+            return "NOT FOUND\n" + ctx.request.path + "\n" + JSON.stringify(rs);
+        };
 
         for (let i = 0; i < this.routes.length; i++) {
             let route = this.routes[i];
@@ -63,6 +67,7 @@ export default class Route {
                 break;
             }
         }
+
         return handle;
     }
 
