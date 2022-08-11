@@ -7,6 +7,10 @@ var TimeHelper = /** @class */ (function () {
         var timestamp = new Date().getTime();
         return Math.floor(timestamp / 1000);
     };
+    TimeHelper.milliTime = function () {
+        var timestamp = new Date().getTime();
+        return timestamp;
+    };
     return TimeHelper;
 }());
 exports.default = TimeHelper;

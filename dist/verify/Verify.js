@@ -11,6 +11,7 @@ var Verify = /** @class */ (function () {
     Verify.tag_lte = "lte";
     Verify.tag_in = "in";
     Verify.tag_between = "between";
+    Verify.tag_lengthEq = "lengthEq";
     Verify.tag_lengthGt = "lengthGt";
     Verify.tag_lengthLt = "lengthLt";
     Verify.tag_lengthGte = "lengthGte";
@@ -25,6 +26,7 @@ var Verify = /** @class */ (function () {
         Verify.tag_lte,
         Verify.tag_in,
         Verify.tag_between,
+        Verify.tag_lengthEq,
         Verify.tag_lengthGt,
         Verify.tag_lengthLt,
         Verify.tag_lengthGte,
@@ -74,6 +76,10 @@ var Verify = /** @class */ (function () {
     Verify.matchBetween = function (rule) { return rule.split(Verify.separator)[0] == Verify.tag_between; };
     Verify.isBetween = function (val, rule) { return Number(val) >= Number(rule.split(Verify.separator)[1]) && val <= Number(rule.split(Verify.separator)[2]); };
     Verify.errBetween = function (key_name, rule) { return key_name + "必须大于等于" + Number(rule.split(Verify.separator)[1]) + "，并且小于等于" + Number(rule.split(Verify.separator)[2]); };
+    Verify.lengthEq = function (count) { return Verify.tag_lengthEq + Verify.separator + count.toString(); };
+    Verify.matchLengthEq = function (rule) { return rule.split(Verify.separator)[0] == Verify.tag_lengthEq; };
+    Verify.isLengthEq = function (val, rule) { return val.toString().length == Number(rule.split(Verify.separator)[1]); };
+    Verify.errLengthEq = function (key_name, rule) { return key_name + "的长度必须等于" + Number(rule.split(Verify.separator)[1]); };
     Verify.lengthGt = function (count) { return Verify.tag_lengthGt + Verify.separator + count.toString(); };
     Verify.matchLengthGt = function (rule) { return rule.split(Verify.separator)[0] == Verify.tag_lengthGt; };
     Verify.isLengthGt = function (val, rule) { return val.toString().length > Number(rule.split(Verify.separator)[1]); };

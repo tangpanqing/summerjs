@@ -11,6 +11,7 @@ export default class Verify {
     protected static tag_in: string = "in";
     protected static tag_between: string = "between";
 
+    protected static tag_lengthEq: string = "lengthEq";
     protected static tag_lengthGt: string = "lengthGt";
     protected static tag_lengthLt: string = "lengthLt";
     protected static tag_lengthGte: string = "lengthGte";
@@ -28,6 +29,7 @@ export default class Verify {
         Verify.tag_in,
         Verify.tag_between,
 
+        Verify.tag_lengthEq,
         Verify.tag_lengthGt,
         Verify.tag_lengthLt,
         Verify.tag_lengthGte,
@@ -78,6 +80,11 @@ export default class Verify {
     static matchBetween = (rule: string) => rule.split(Verify.separator)[0] == Verify.tag_between;
     static isBetween = (val: any, rule: string) => Number(val) >= Number(rule.split(Verify.separator)[1]) && val <= Number(rule.split(Verify.separator)[2]);
     static errBetween = (key_name: string, rule: string) => key_name + "必须大于等于" + Number(rule.split(Verify.separator)[1]) + "，并且小于等于" + Number(rule.split(Verify.separator)[2]);
+
+    static lengthEq = (count: number) => Verify.tag_lengthEq + Verify.separator + count.toString();
+    static matchLengthEq = (rule: string) => rule.split(Verify.separator)[0] == Verify.tag_lengthEq;
+    static isLengthEq = (val: any, rule: string) => val.toString().length == Number(rule.split(Verify.separator)[1]);
+    static errLengthEq = (key_name: string, rule: string) => key_name + "的长度必须等于" + Number(rule.split(Verify.separator)[1]);
 
     static lengthGt = (count: number) => Verify.tag_lengthGt + Verify.separator + count.toString();
     static matchLengthGt = (rule: string) => rule.split(Verify.separator)[0] == Verify.tag_lengthGt;

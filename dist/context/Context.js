@@ -48,7 +48,6 @@ var Context = /** @class */ (function () {
     Context.from = function (request) {
         var ctx = new Context();
         ctx.request = request;
-        //ctx.response = response;
         return ctx;
     };
     //请求相关
@@ -88,10 +87,10 @@ var Context = /** @class */ (function () {
     };
     //响应相关
     Context.prototype.setCookie = function (value) {
-        this.response.setCookie(value);
+        this.response_cookie = value;
     };
     Context.prototype.clearCookie = function () {
-        this.response.clearCookie();
+        this.response_cookie = undefined;
     };
     //数据库相关
     Context.prototype.table = function (table_name, db_type) {
@@ -169,11 +168,9 @@ var Context = /** @class */ (function () {
             content_type = content_type_map[suffix];
         var path = './public' + this.request.path;
         if (!fs.existsSync(path)) {
-            this.writeHead(400, { 'Content-type': "text/html;charset=utf8" });
             return "NOT FOUND";
         }
         else {
-            this.writeHead(200, { 'Content-type': content_type });
             return fs.readFileSync(path);
         }
     };
@@ -208,26 +205,10 @@ var Context = /** @class */ (function () {
                             throw new Error(e_1);
                         }
                         return [3 /*break*/, 5];
-                    case 5:
-                        if (typeof (res_handle) == "object") {
-                            this.writeHead(200, {
-                                "Content-Type": "application/json;charset=utf8"
-                            });
-                            res_handle = JSON.stringify(res_handle);
-                        }
-                        else {
-                            this.writeHead(200, {
-                                "Content-Type": "text/html;charset=utf8"
-                            });
-                        }
-                        return [2 /*return*/, res_handle];
+                    case 5: return [2 /*return*/, res_handle];
                 }
             });
         });
-    };
-    Context.prototype.writeHead = function (code, header) {
-        this.response_code = code;
-        this.response_header = header;
     };
     return Context;
 }());

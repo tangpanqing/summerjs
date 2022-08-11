@@ -1,6 +1,5 @@
 import Request from "../request/Request";
 import DbConnMap from "../db/DbConnMap";
-import Response from "../response/Response";
 import Db from "../db/Db";
 import Verify from "../verify/Verify";
 import * as fs from "fs";
@@ -9,19 +8,14 @@ import Hook from "../hook/Hook";
 
 export default class Context {
 
-
     db_conn_map!: DbConnMap;
     request!: Request;
-    response!: Response;
     err_list: string[] = [];
-
-    response_code!:number;
-    response_header!:any;
+    response_cookie?:string;
 
     static from(request: Request) {
         let ctx = new Context();
         ctx.request = request;
-        //ctx.response = response;
         return ctx;
     }
 
@@ -58,11 +52,11 @@ export default class Context {
 
     //响应相关
     setCookie(value: string) {
-        this.response.setCookie(value);
+        this.response_cookie = value;
     }
 
     clearCookie() {
-        this.response.clearCookie();
+        this.response_cookie = undefined;
     }
 
     //数据库相关
@@ -106,10 +100,8 @@ export default class Context {
 
         let path = './public' + this.request.path;
         if (!fs.existsSync(path)) {
-            this.writeHead(400, {'Content-type': "text/html;charset=utf8"})
             return "NOT FOUND";
         } else {
-            this.writeHead(200, {'Content-type': content_type})
             return fs.readFileSync(path);
         }
     }
@@ -135,23 +127,7 @@ export default class Context {
             }
         }
 
-        if (typeof (res_handle) == "object") {
-            this.writeHead(200, {
-                "Content-Type": "application/json;charset=utf8"
-            });
-            res_handle = JSON.stringify(res_handle);
-        } else {
-            this.writeHead(200, {
-                "Content-Type": "text/html;charset=utf8"
-            });
-        }
-
         return res_handle;
     }
 
-
-    writeHead(code: number, header: any) {
-        this.response_code = code;
-        this.response_header = header;
-    }
 }

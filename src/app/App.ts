@@ -144,10 +144,25 @@ export default class App {
             let request = await Request.fromCommon(req);
 
             let ctx = Context.from(request);
-            let handle_res = await ctx.runCommon(App.exception_handle, App.content_type_map);
+            let res_handle = await ctx.runCommon(App.exception_handle, App.content_type_map);
 
-            res.writeHead(ctx.response_code, ctx.response_header);
-            res.end(handle_res);
+            if (ctx.response_cookie) {
+                res.setHeader('Set-Cookie', ctx.response_cookie);
+            }
+
+
+            if (typeof (res_handle) == "object") {
+                res.writeHead(200, {
+                    "Content-Type": "application/json;charset=utf8"
+                });
+                res_handle = JSON.stringify(res_handle);
+            } else {
+                res.writeHead(200, {
+                    "Content-Type": "text/html;charset=utf8"
+                });
+            }
+
+            res.end(res_handle);
         });
 
         server.listen(port, '0.0.0.0', () => {

@@ -157,7 +157,7 @@ var App = /** @class */ (function () {
         if (port === void 0) { port = 5000; }
         App.runBefore();
         var server = http.createServer(function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-            var request, ctx, handle_res;
+            var request, ctx, res_handle;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, Request_1.default.fromCommon(req)];
@@ -166,9 +166,22 @@ var App = /** @class */ (function () {
                         ctx = Context_1.default.from(request);
                         return [4 /*yield*/, ctx.runCommon(App.exception_handle, App.content_type_map)];
                     case 2:
-                        handle_res = _a.sent();
-                        res.writeHead(ctx.response_code, ctx.response_header);
-                        res.end(handle_res);
+                        res_handle = _a.sent();
+                        if (ctx.response_cookie) {
+                            res.setHeader('Set-Cookie', ctx.response_cookie);
+                        }
+                        if (typeof (res_handle) == "object") {
+                            res.writeHead(200, {
+                                "Content-Type": "application/json;charset=utf8"
+                            });
+                            res_handle = JSON.stringify(res_handle);
+                        }
+                        else {
+                            res.writeHead(200, {
+                                "Content-Type": "text/html;charset=utf8"
+                            });
+                        }
+                        res.end(res_handle);
                         return [2 /*return*/];
                 }
             });

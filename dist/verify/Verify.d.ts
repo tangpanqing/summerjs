@@ -7,6 +7,7 @@ export default class Verify {
     protected static tag_lte: string;
     protected static tag_in: string;
     protected static tag_between: string;
+    protected static tag_lengthEq: string;
     protected static tag_lengthGt: string;
     protected static tag_lengthLt: string;
     protected static tag_lengthGte: string;
@@ -42,6 +43,10 @@ export default class Verify {
     static matchBetween: (rule: string) => boolean;
     static isBetween: (val: any, rule: string) => boolean;
     static errBetween: (key_name: string, rule: string) => string;
+    static lengthEq: (count: number) => string;
+    static matchLengthEq: (rule: string) => boolean;
+    static isLengthEq: (val: any, rule: string) => boolean;
+    static errLengthEq: (key_name: string, rule: string) => string;
     static lengthGt: (count: number) => string;
     static matchLengthGt: (rule: string) => boolean;
     static isLengthGt: (val: any, rule: string) => boolean;
